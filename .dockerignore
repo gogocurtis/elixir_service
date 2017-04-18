@@ -1,0 +1,12 @@
+.git
+node_modules
+priv/static
+el_service_docker.tar.gz
+_build
+cover
+deps
+doc
+test
+tmp
+erl_crash.dump
+*.ez
