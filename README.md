@@ -1,3 +1,7 @@
+# Setup Elixir
+
+  * brew update && brew install elixir
+
 # ElixirService
 
 To start your Phoenix app:
