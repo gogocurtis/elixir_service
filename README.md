@@ -1,5 +1,6 @@
 # Setup Elixir
 
+  * brew update && brew install elixir
 
 # ElixirService
 
