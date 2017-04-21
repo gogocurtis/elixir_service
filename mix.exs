@@ -17,7 +17,8 @@ defmodule ElixirService.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {ElixirService, []},
-     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext],
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger,
+                    :gettext, :defmemo, :exprof],
      included_applications: [:ex_dns_client]
     ]
   end
@@ -37,6 +38,8 @@ defmodule ElixirService.Mixfile do
      {:gettext, "~> 0.11"},
      {:ex_dns_client, "~> 0.1.0"},
      {:mix_docker, "~> 0.3.0"},
-     {:cowboy, "~> 1.0"}]
+     {:cowboy, "~> 1.0"},
+     {:defmemo, "~> 0.1.0"},
+     {:exprof, "~> 0.2.0"}]
   end
 end

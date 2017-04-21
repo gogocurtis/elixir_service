@@ -1,4 +1,6 @@
 defmodule MailCheck do
+  import DefMemo
+
   defstruct [:hostname, :valid_mx, :has_suggestion, :suggestion]
 
   def extract_domain(email) do
@@ -53,13 +55,13 @@ defmodule MailCheck do
   def white_list, do: ["gmail.com", "yahoo.com", "hotmail.com"]
 
   # https://en.wikipedia.org/wiki/Levenshtein_distance
-  def edit_distance(sequence, sequence), do: 0
+  defmemo edit_distance(sequence, sequence), do: 0
 
-  def edit_distance([], sequence), do: length(sequence)
+  defmemo edit_distance([], sequence), do: length(sequence)
 
-  def edit_distance(sequence, []), do: length(sequence)
+  defmemo edit_distance(sequence, []), do: length(sequence)
 
-  def edit_distance([source_head | source_tail], [source_head | target_tail]) do
+  defmemo edit_distance([source_head | source_tail], [source_head | target_tail]) do
     edit_distance(source_tail, target_tail)
   end
 
@@ -71,7 +73,7 @@ defmodule MailCheck do
     edit_distance(source, String.graphemes(target))
   end
 
-  def edit_distance([source_head | source_tail], [target_head | target_tail]) do
+  defmemo edit_distance([source_head | source_tail], [target_head | target_tail]) do
     Enum.min([
        # Deletion
        1 + edit_distance(source_tail, [target_head | target_tail]),
