@@ -31,6 +31,28 @@ defmodule MailCheck do
       false
     end
   end
+  
+  # https://en.wikipedia.org/wiki/Levenshtein_distance
+  def edit_distance(sequence, sequence), do: 0
+  
+  def edit_distance([], sequence), do: length(sequence)
+  
+  def edit_distance(sequence, []), do: length(sequence)
+  
+  def edit_distance([source_head | source_tail], [source_head | target_tail]) do  
+    edit_distance(source_tail, target_tail) 
+  end
+  
+  def edit_distance([source_head | source_tail], [target_head | target_tail]) do
+    Enum.min([
+       # Deletion 
+       1 + edit_distance(source_tail, [target_head | target_tail]),
+       # Insertion
+       1 + edit_distance([source_head | source_tail], target_tail),
+       # Subsitution
+       1 + edit_distance(source_tail, target_tail),
+    ]) 
+  end
 end
 
 defmodule ElixirService.DnsController do
