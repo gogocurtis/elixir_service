@@ -62,11 +62,11 @@ defmodule ElixirService.DnsController do
   def check_mx(conn, %{}) do
     conn
     |>  put_status(422)
-    |>  json %{"errors" => ["invalid params"]}
+    |>  json(%{"errors" => ["invalid params"]})
   end
 
   def check_mx(conn, %{"email" => email }) do
     conn
-    |> json MailCheck.check(email)
+    |> json(MailCheck.check(email))
   end
 end
