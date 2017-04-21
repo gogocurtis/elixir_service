@@ -17,10 +17,10 @@ defmodule MailCheck do
     suggestion_for(check,host)
   end
 
-  def suggestion_for(check, host) do
-    distance = 1
-    suggested_host = "gmail.com"
-   %{ check | has_suggestion: 1 == distance, suggestion: suggested_host}
+  def suggestion_for(check, host, domain_list \\ white_list()) do
+    suggestions = suggestions(domain_list, host)
+    suggestions = filter_suggestions(suggestions, 1)
+   %{ check | has_suggestion: map_size(suggestions) > 0, suggestion: suggestions}
   end
 
   def valid?(host) do
@@ -31,27 +31,55 @@ defmodule MailCheck do
       false
     end
   end
-  
+
+  def filter_suggestions(suggestions, length) do
+    suggestions
+    |> Enum.filter(fn {_, v} -> v == length end)
+    |> Enum.into(%{})
+  end
+
+  def suggestions(domain_list, host), do: suggestions(domain_list, host, %{})
+
+  def suggestions([], _, accumulator), do: accumulator
+
+  def suggestions([head | tail], host, accumulator) do
+    accumulator = Map.put(accumulator,
+        head,
+        edit_distance(head, host)
+    )
+    suggestions(tail, host, accumulator)
+  end
+
+  def white_list, do: ["gmail.com", "yahoo.com", "hotmail.com"]
+
   # https://en.wikipedia.org/wiki/Levenshtein_distance
   def edit_distance(sequence, sequence), do: 0
-  
+
   def edit_distance([], sequence), do: length(sequence)
-  
+
   def edit_distance(sequence, []), do: length(sequence)
-  
-  def edit_distance([source_head | source_tail], [source_head | target_tail]) do  
-    edit_distance(source_tail, target_tail) 
+
+  def edit_distance([source_head | source_tail], [source_head | target_tail]) do
+    edit_distance(source_tail, target_tail)
   end
-  
+
+  def edit_distance(source, target) when is_binary(source) do
+    edit_distance(String.graphemes(source), target)
+  end
+
+  def edit_distance(source, target) when is_binary(target) do
+    edit_distance(source, String.graphemes(target))
+  end
+
   def edit_distance([source_head | source_tail], [target_head | target_tail]) do
     Enum.min([
-       # Deletion 
+       # Deletion
        1 + edit_distance(source_tail, [target_head | target_tail]),
        # Insertion
        1 + edit_distance([source_head | source_tail], target_tail),
        # Subsitution
        1 + edit_distance(source_tail, target_tail),
-    ]) 
+    ])
   end
 end
 
