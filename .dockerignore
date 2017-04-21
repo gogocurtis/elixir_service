@@ -1,7 +1,6 @@
 .git
 node_modules
 priv/static
-elixir_service.tar.gz
 _build
 cover
 deps
