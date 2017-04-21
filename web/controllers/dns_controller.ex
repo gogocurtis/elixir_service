@@ -59,7 +59,14 @@ defmodule ElixirService.DnsController do
   use ElixirService.Web, :controller
 
 
+  def check_mx(conn, %{}) do
+    conn
+    |>  put_status(422)
+    |>  json %{"errors" => ["invalid params"]}
+  end
+
   def check_mx(conn, %{"email" => email }) do
-      json conn, MailCheck.check(email)
+    conn
+    |> json MailCheck.check(email)
   end
 end
