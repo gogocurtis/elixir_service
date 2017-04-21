@@ -1,2 +1,2 @@
 #/bin/sh
-mix docker.shipit --tag dockergogo/el_service_docker:latest && docker push dockergogo/el_service_docker:latest
+mix test && mix docker.shipit --tag dockergogo/el_service_docker:latest && docker push dockergogo/el_service_docker:latest
