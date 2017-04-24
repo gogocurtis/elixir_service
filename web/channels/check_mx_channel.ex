@@ -9,9 +9,13 @@ defmodule ElixirService.CheckMxChannel do
   end
 
   def handle_in("check-mx", %{"email" => email}, socket) do
-    response = MailCheck.check(email)
-    Logger.info("check-mx, %{ \"email\" => #{email}},...) => #{inspect(response)}")
-    push socket, "check-mx"
+    response = ElixirService.MailCheck.check(email)
+
+    Task.start  (fn ->
+      Logger.info("check-mx, %{ \"email\" => #{email}},...) => #{inspect(response)}")
+      push socket, "check-mx", response
+    end)
+
     {:noreply, socket}
   end
 
