@@ -1,17 +1,27 @@
-defmodule HelloPhoenix.CheckMxChannel do
+defmodule ElixirService.CheckMxChannel do
   use Phoenix.Channel
 
-  def join(_channel_name, _message, socket) do
+  require Logger
+
+  def join(channel_name, message, socket) do
+    Logger.info("join(#{channel_name},#{inspect(message)},...)")
     {:ok, socket}
   end
 
-  def handle_in(_msg, %{"body" => body}, socket) do
-    broadcast! socket, "generic_msg", %{body: body}
+  def handle_in("check-mx", %{"email" => email}, socket) do
+    response = MailCheck.check(email)
+    Logger.info("check-mx, %{ \"email\" => #{email}},...) => #{inspect(response)}")
+    push socket, "check-mx"
     {:noreply, socket}
   end
 
-  def handle_out(_msg, payload, socket) do
-    push socket, "generic_msg", payload
+  def handle_in(msg, payload, socket) do
+    Logger.info("handle_in(#{msg}, #{inspect(payload)},...)")
+    {:noreply, socket}
+  end
+
+  def handle_out(msg, payload, socket) do
+    Logger.info("handle_out(#{msg},#{payload},...)")
     {:noreply, socket}
   end
 end

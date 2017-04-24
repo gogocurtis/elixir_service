@@ -2,7 +2,7 @@ defmodule ElixirService.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "checkmx:*", ElixirService.CheckMxChannel
+  channel "dns", ElixirService.CheckMxChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
