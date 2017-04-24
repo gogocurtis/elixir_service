@@ -11,6 +11,7 @@ defmodule ElixirService.MailCheck do
   def check(email) do
     host  = extract_domain(email)
 
+    # TODO : production code requirement
     # this and
     valid = DnsCheck.valid?(host)
     # this can be done in parallel
