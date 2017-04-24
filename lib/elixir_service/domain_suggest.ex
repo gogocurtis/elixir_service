@@ -4,20 +4,10 @@ defmodule ElixirService.DomainSuggest do
     suggestion_map = filter_suggestions(suggestions(domain_list, host), 1)
     suggestions =  Map.keys(suggestion_map)
     if length(suggestions) > 0 do
-      %{ has_suggestion: true , suggestion: List.first(suggestions)}
+      %{ hasSuggestion: true , suggestion: List.first(suggestions)}
     else
-      %{ has_suggestion: false }
+      %{ hasSuggestion: false }
     end
-  end
-
-  def add_suggestion(check, host) do
-    suggestion_for(check,host)
-  end
-
-  def suggestion_for(check, host, domain_list \\ white_list()) do
-    suggestions = suggestions(domain_list, host)
-    suggestions = filter_suggestions(suggestions, 1)
-    %{ check | has_suggestion: map_size(suggestions) > 0, suggestion: suggestions}
   end
 
   def filter_suggestions(suggestions, length) do

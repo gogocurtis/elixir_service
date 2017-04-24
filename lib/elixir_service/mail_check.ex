@@ -1,5 +1,5 @@
 defmodule ElixirService.MailCheck do
-  defstruct [:hostname, :valid_mx, :has_suggestion, :suggestion]
+  defstruct [:hostname, :validMx, :hasSuggestion, :suggestion]
 
   alias ElixirService.DomainSuggest
   alias ElixirService.MailCheck
@@ -21,7 +21,7 @@ defmodule ElixirService.MailCheck do
     # the timeout occurs
     #
     Map.merge(%MailCheck{hostname: host,
-                         valid_mx: valid
+                         validMx: valid
                         }, suggestion)
   end
 end
