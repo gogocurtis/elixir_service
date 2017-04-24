@@ -9,6 +9,13 @@ defmodule ElixirService.MailCheckTest do
     assert Map.get(answer,:hostname) == "ram9.cc"
   end
 
+  test "MailCheck writes a suggestion for gmail" do
+    answer = MailCheck.check("email@gnail.com")
+
+    assert Map.get(answer,:suggestion) == "gmail.com"
+    assert Map.get(answer,:has_suggestion) == true
+  end
+
   test "MailCheck writes in validity of hostname" do
     answer = MailCheck.check("email@ram9.cc")
 
@@ -50,10 +57,14 @@ defmodule ElixirService.MailCheckTest do
     assert response == %{"gmail.com" => 1, "outlook.com" => 7, "yahoo.com" => 5}
   end
 
+  test "Doesn't give suggestions for unknown domains" do
+    response = Suggest.suggest("blarney.cc", ["gmail.com"])
+    assert Map.get(response, :has_suggestion) == false
+    assert Map.get(response, :suggestion) == nil
+  end
   test "Gives appropriate suggestions" do
-    check =  MailCheck.check("email@gnail.com")
-    response = Suggest.suggestion_for(check, "gnail.com", ["gmail.com", "yahoo.com"])
+    response = Suggest.suggest("gnail.com", ["gmail.com"])
     assert Map.get(response, :has_suggestion) == true
-    assert Map.get(response, :suggestion) == %{"gmail.com" => 1}
+    assert Map.get(response, :suggestion) == "gmail.com"
   end
 end

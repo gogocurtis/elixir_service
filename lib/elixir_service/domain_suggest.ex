@@ -1,5 +1,14 @@
 defmodule ElixirService.DomainSuggest do
   import DefMemo
+  def suggest(host, domain_list \\ white_list()) do
+    suggestion_map = filter_suggestions(suggestions(domain_list, host), 1)
+    suggestions =  Map.keys(suggestion_map)
+    if length(suggestions) > 0 do
+      %{ has_suggestion: true , suggestion: List.first(suggestions)}
+    else
+      %{ has_suggestion: false }
+    end
+  end
 
   def add_suggestion(check, host) do
     suggestion_for(check,host)

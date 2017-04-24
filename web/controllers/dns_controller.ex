@@ -1,4 +1,3 @@
-
 defmodule ElixirService.DnsController do
   use ElixirService.Web, :controller
 
