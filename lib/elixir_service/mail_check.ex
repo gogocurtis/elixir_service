@@ -10,10 +10,15 @@ defmodule ElixirService.MailCheck do
 
   def check(email) do
     host  = extract_domain(email)
-    valid = DnsCheck.valid?(host)
 
+    # this and
+    valid = DnsCheck.valid?(host)
+    # this can be done in parallel
     suggestion = DomainSuggest.suggest(host)
 
+    # build the respons based on the best information resolved before
+    # the timeout occurs
+    #
     Map.merge(%MailCheck{hostname: host,
                          valid_mx: valid
                         }, suggestion)
