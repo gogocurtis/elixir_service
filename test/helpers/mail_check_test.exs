@@ -18,7 +18,6 @@ defmodule ElixirService.MailCheckTest do
 
   test "MailCheck writes in validity of hostname" do
     answer = MailCheck.check("email@ram9.cc")
-
     assert Map.get(answer,:validMx) == true
 
     answer = MailCheck.check("email@ram9.wrong")

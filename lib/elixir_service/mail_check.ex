@@ -1,5 +1,5 @@
 defmodule ElixirService.MailCheck do
-  defstruct [:hostname, :email ,:valid_mx, :has_suggestion, :suggestion, :error]
+  defstruct [:hostname, :email ,:validMx, :hasSuggestion, :suggestion, :error]
 
   @doc """
   Starts the registry with the given `name`.
@@ -22,17 +22,16 @@ defmodule ElixirService.MailCheck do
 
   def check(email) do
     host = extract_domain(email)
-    async_tasks = tasks(host)
-    results = perform(async_tasks, 900)
+    results = perform(tasks(host), 900)
 
-   case results do
-     {:ok, result} ->
-       Enum.reduce(result, %MailCheck{hostname: host, email: email} ,fn(el,acc) ->
-         Map.merge(acc,el)
-       end)
-     {:timeout, _} ->
-       %MailCheck{error: "timeout"}
-   end
+    case results do
+      {:ok, result} ->
+        Enum.reduce(result, %MailCheck{hostname: host, email: email} ,fn(el,acc) ->
+          Map.merge(acc,el)
+        end)
+      {:timeout, _} ->
+        %MailCheck{error: "timeout"}
+    end
   end
 
   def perform(tasks, timeout) do
