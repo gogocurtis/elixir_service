@@ -13,7 +13,7 @@ use Mix.Config
 # which you typically run after static files are built.
 config :elixir_service, ElixirService.Endpoint,
   http: [port: {:system, "PORT"}],
-  url:  [host: {:system, "HOST"},
+  url:  [host: {:system, "DOCKERCLOUD_SERVICE_FQDN"},
          port: {:system, "PORT"}],
   server: true,
   root: ".",
