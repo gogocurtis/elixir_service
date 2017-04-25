@@ -6,6 +6,7 @@ RUN apk update && \
 
 EXPOSE 8080
 ENV PORT=8080 HOST=127.0.0.1
+ENV SERVICE_FQDN=$DOCKERCLOUD_SERVICE_FQDN
 ENV MIX_ENV=prod REPLACE_OS_VARS=true SHELL=/bin/sh
 
 ADD elixir_service.tar.gz ./
