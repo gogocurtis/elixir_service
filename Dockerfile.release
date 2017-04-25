@@ -5,8 +5,8 @@ RUN apk update && \
     rm -rf /var/cache/apk/*
 
 EXPOSE 8080
-ENV PORT=8080 HOST=127.0.0.1
-ENV SERVICE_FQDN=web.production-elixir-service.36cf5ace.svc.dockerapp.io
+ENV PORT=8080
+ENV HOST=web.production-elixir-service.36cf5ace.svc.dockerapp.io
 ENV MIX_ENV=prod REPLACE_OS_VARS=true SHELL=/bin/sh
 
 ADD elixir_service.tar.gz ./
