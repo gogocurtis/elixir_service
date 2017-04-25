@@ -9,7 +9,6 @@ config :mix_docker, image: "dockergogo/el_service_docker"
 
 # Configures the endpoint
 config :elixir_service, ElixirService.Endpoint,
-  url: [host: "localhost"],
   secret_key_base: "ML4nltTCdy5ZGttTs9BokhZorOw+DQdRbiIElzDr3isRFeIVk3BQ7IugfbVGPjuZ",
   render_errors: [view: ElixirService.ErrorView, accepts: ~w(html json)],
   pubsub: [name: ElixirService.PubSub,
