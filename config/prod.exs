@@ -15,6 +15,7 @@ config :elixir_service, ElixirService.Endpoint,
   http: [port: {:system, "PORT"}],
   url:  [host: {:system, "DOCKERCLOUD_SERVICE_FQDN"},
          port: {:system, "PORT"}],
+  check_origin: false,
   server: true,
   root: ".",
   version: Mix.Project.config[:version]
