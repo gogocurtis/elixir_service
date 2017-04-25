@@ -62,6 +62,7 @@ defmodule ElixirService.MailCheckTest do
     assert Map.get(response, :hasSuggestion) == false
     assert Map.get(response, :suggestion) == nil
   end
+
   test "Gives appropriate suggestions" do
     response = Suggest.suggest("gnail.com", ["gmail.com"])
     assert Map.get(response, :hasSuggestion) == true

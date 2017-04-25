@@ -11,7 +11,7 @@ defmodule ElixirService do
       # Start the endpoint when the application starts
       supervisor(ElixirService.Endpoint, []),
       # Start your own worker by calling: ElixirService.Worker.start_link(arg1, arg2, arg3)
-      # worker(ElixirService.Worker, [arg1, arg2, arg3]),
+      worker(ElixirService.MailCheck, [])
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
