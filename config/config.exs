@@ -5,7 +5,7 @@
 # is restricted to this project.
 use Mix.Config
 
-config :mix_docker, image: "dockergogo/el_service_docker"
+config :mix_docker, image: "us.gcr.io/el-service/el_service_docker"
 
 # Configures the endpoint
 config :elixir_service, ElixirService.Endpoint,

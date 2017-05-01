@@ -29,7 +29,7 @@ defmodule ElixirService.DomainSuggest do
     suggestions(tail, host, accumulator)
   end
 
-  def white_list, do: ["gmail.com", "yahoo.com", "hotmail.com"]
+  def white_list, do: ["gmail.com", "yahoo.com", "hotmail.com", "indiegogo.com"]
 
   # https://en.wikipedia.org/wiki/Levenshtein_distance
   defmemo edit_distance(sequence, sequence), do: 0

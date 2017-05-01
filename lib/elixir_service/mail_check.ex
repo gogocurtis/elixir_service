@@ -22,7 +22,7 @@ defmodule ElixirService.MailCheck do
 
   def check(email) do
     host = extract_domain(email)
-    results = perform(tasks(host), 900)
+    results = perform(tasks(host),1900)
 
     case results do
       {:ok, result} ->
@@ -31,21 +31,19 @@ defmodule ElixirService.MailCheck do
         end)
       {:timeout, _} ->
         %MailCheck{error: "timeout"}
+      _ ->
+        %MailCheck{error: "timeout"}
     end
   end
 
   def perform(tasks, timeout) do
-    List.first(
-      Map.to_list(
-        Enum.group_by(
-          Enum.map(Task.yield_many(tasks, timeout),
-            fn {task, response} -> response || {:timeout, Task.shutdown(task, :brutal_kill)} end
-          ),
-          fn(el) -> elem(el,0) end,
-          fn(el) -> elem(el,1) end
-        )
-      )
-    )
+    Enum.map(Task.yield_many(tasks, timeout),
+      fn {task, response} -> response || {:timeout, Task.shutdown(task, :brutal_kill)} end
+    ) |> Enum.group_by(
+      fn(el) -> elem(el,0) end,
+      fn(el) -> elem(el,1) end
+    ) |> Map.to_list
+      |> List.first
   end
 
   def tasks(host) do
