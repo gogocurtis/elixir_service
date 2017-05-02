@@ -1,0 +1,4 @@
+* TODO trigger build on change:
+** move to runtime configuration loading to facilitate 12-factor and hiding secrets outside of the compile and docker image build phase
+** https://github.com/phoenixframework/phoenix/blob/master/lib/phoenix/endpoint.ex#L77
+

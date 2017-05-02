@@ -39,4 +39,30 @@ defmodule ElixirService.Endpoint do
     signing_salt: "RRvbJb1l"
 
   plug ElixirService.Router
+
+  def get_env_or_raise(var) do
+    System.get_env(var) || raise "expected #{var} environment variable to be set"
+  end
+
+  def get_env_or_default(var,default) do
+    System.get_env(var) || default
+  end
+
+  def load_from_system_env(config) do
+    port = get_env_or_raise("PORT")
+    host = get_env_or_raise("HOST")
+    check_origin = String.split(gen_env_or_default("CHECK_ORIGIN", "http://localhost:8000"),",")
+    secret_key   = gen_env_or_default("SECRET_KEY_BASE", :crypto.strong_rand_bytes(64) |> Base.encode64)
+    #   http: [port: {:system, "PORT"}],
+    #     url:  [host: {:system, "DOCKERCLOUD_SERVICE_FQDN"},
+    #            port: {:system, "PORT"}],
+    #     check_origin: ["http://localhost:8000"],
+    sys_config = config
+    |> Keyword.put(:http, [port: port])
+    |> Keyword.put(:url, [host: host, port: port])
+    |> Keyword.put(:secret_key_base, secret_key)
+    |> Keyword.put(:check_origin, check_origin
+
+    {:ok, sys_config }
+  end
 end

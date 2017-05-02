@@ -2,8 +2,6 @@ FROM bitwalker/alpine-erlang:6.1
 
 ENV HOME=/opt/app/ TERM=xterm
 
-RUN echo `which kubectl`
-
 # Install Elixir and basic build dependencies
 RUN \
     echo "@edge http://nl.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories && \

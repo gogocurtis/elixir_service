@@ -3,9 +3,11 @@ FROM bitwalker/alpine-erlang:6.1
 RUN apk update && \
     apk --no-cache --update add libgcc libstdc++ && \
     rm -rf /var/cache/apk/*
-
-EXPOSE 8080
-ENV PORT=8080
+#
+# expose port at run time
+#
+ENV PORT=${PORT} HOST=${HOST} 
+ENV CHECK_ORIGIN=http://localhost:8000,https://www.indiegogo.com,https://admin.indiegogo.com,https://indiegogo.com
 ENV MIX_ENV=prod REPLACE_OS_VARS=true SHELL=/bin/sh
 
 ADD elixir_service.tar.gz ./
