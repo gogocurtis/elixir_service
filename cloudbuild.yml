@@ -1,0 +1,14 @@
+steps:
+- name: "build release tarball in docker"
+  args: ['docker', 'build' ,'-f' ,'Dockerfile.build', '-t', 'us.gcr.io/el-service/el_service_docker:build' ,'.']
+- name: "ensure no running release docker"
+  args: [ 'docker', 'rm' ,'-f', 'mix_docker-437470']
+- name: "start container to get tarball"
+  args: ['docker' ,'create, '--name' ,'mix_docker-437470' ,'us.gcr.io/el-service/el_service_docker:build']
+- name: "copy tarball from running container"
+  args: ['docker', 'cp', 'mix_docker-437470:/opt/app/_build/prod/rel/elixir_service/releases/0.0.1/elixir_service.tar.gz' ,'elixir_service.tar.gz']
+- name: "stop running release docker"
+  args: [ 'docker', 'rm' ,'-f', 'mix_docker-437470']
+- name: "build runtime docker container with release tarball"
+  args: ['docker' ,'build', '-f', 'Dockerfile.release', '-t' ,'us.gcr.io/el-service/el_service_docker:release', '.']
+	
