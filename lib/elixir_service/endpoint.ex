@@ -51,8 +51,8 @@ defmodule ElixirService.Endpoint do
   def load_from_system_env(config) do
     port = get_env_or_raise("PORT")
     host = get_env_or_raise("HOST")
-    check_origin = String.split(gen_env_or_default("CHECK_ORIGIN", "http://localhost:8000"),",")
-    secret_key   = gen_env_or_default("SECRET_KEY_BASE", :crypto.strong_rand_bytes(64) |> Base.encode64)
+    check_origin = String.split(get_env_or_default("CHECK_ORIGIN", "http://localhost:8000"),",")
+    secret_key   = get_env_or_default("SECRET_KEY_BASE", :crypto.strong_rand_bytes(64) |> Base.encode64)
     #   http: [port: {:system, "PORT"}],
     #     url:  [host: {:system, "DOCKERCLOUD_SERVICE_FQDN"},
     #            port: {:system, "PORT"}],
@@ -61,7 +61,7 @@ defmodule ElixirService.Endpoint do
     |> Keyword.put(:http, [port: port])
     |> Keyword.put(:url, [host: host, port: port])
     |> Keyword.put(:secret_key_base, secret_key)
-    |> Keyword.put(:check_origin, check_origin
+    |> Keyword.put(:check_origin, check_origin)
 
     {:ok, sys_config }
   end
