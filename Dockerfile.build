@@ -27,7 +27,7 @@ RUN mix do deps.get, deps.compile
 # i don't think this is going to cache properly until
 # we do a copy of the static assets into the layer
 # until that time it's gonna be after the main copy operation
-COPY priv/static web/static  ./
+COPY web/static  ./
 RUN mix phoenix.digest
 
 # cache node deps
@@ -36,6 +36,4 @@ RUN mix phoenix.digest
 #RUN npm install
 
 COPY . .
-RUN mix compile
-RUN mix test
 RUN mix release --env=prod --verbose
