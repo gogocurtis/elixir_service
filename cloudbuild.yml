@@ -6,7 +6,7 @@ steps:
   args: ['rm' ,'-f', 'mix_docker-437470']
 
 - name: "gcr.io/cloud-builders/docker"
-  args: ['create, '--name' ,'mix_docker-437470' ,'us.gcr.io/el-service/el_service_docker:build']
+  args: ['create', '--name' ,'mix_docker-437470' ,'us.gcr.io/el-service/el_service_docker:build']
 
 - name: "gcr.io/cloud-builders/docker"
   args: ['cp', 'mix_docker-437470:/opt/app/_build/prod/rel/elixir_service/releases/0.0.1/elixir_service.tar.gz' ,'elixir_service.tar.gz']
